@@ -1,4 +1,4 @@
-<resources>
+    <resources>
     <string name="app_name">Asteroid Radar</string>
 
     <string name="next_week_asteroids">View week asteroids</string>
