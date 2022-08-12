@@ -1,9 +1,9 @@
 package com.udacity.asteroidradar.network
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.udacity.asteroidradar.Constants
-import com.udacity.asteroidradar.model.Asteroid
 import com.udacity.asteroidradar.model.PictureOfDay
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -15,7 +15,7 @@ interface AsteroidServices {
     @GET("neo/rest/v1/feed")
     suspend fun getAsteroid(
         @Query("api_key") api_key: String
-    ): List<Asteroid>
+    ): String
 
     @GET("planetary/apod")
     suspend fun getPicOfTheDay(
@@ -31,6 +31,8 @@ object APIServices {
     private val retrofit = Retrofit.Builder()
         .baseUrl(Constants.BASE_URL)
         .addConverterFactory(ScalarsConverterFactory.create())
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
 
     val asteroidServices: AsteroidServices by lazy {

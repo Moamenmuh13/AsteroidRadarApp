@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/MU/AndroidStudioProjects/AsteroidRadarApp/app/src/main/res/layout/activity_main.xml" value="0.17617753623188406" />
+        <entry key="..\:/Users/MU/AndroidStudioProjects/AsteroidRadarApp/app/src/main/res/layout/fragment_detail.xml" value="0.17617753623188406" />
+        <entry key="..\:/Users/MU/AndroidStudioProjects/AsteroidRadarApp/app/src/main/res/layout/fragment_main.xml" value="0.15806159420289856" />
+        <entry key="..\:/Users/MU/AndroidStudioProjects/AsteroidRadarApp/app/src/main/res/layout/ticket_main.xml" value="0.17617753623188406" />
         <entry key="..\:/Users/mumen/AndroidStudioProjects/Asteroid-Radar-App---Starter/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/mumen/AndroidStudioProjects/Asteroid-Radar-App---Starter/app/src/main/res/layout/fragment_detail.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/mumen/AndroidStudioProjects/Asteroid-Radar-App---Starter/app/src/main/res/layout/fragment_main.xml" value="0.25416666666666665" />

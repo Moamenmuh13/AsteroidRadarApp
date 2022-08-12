@@ -2,10 +2,10 @@ package com.udacity.asteroidradar.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.udacity.asteroidradar.database.AsteroidEntities.Companion.TABLE_NAME
+import com.udacity.asteroidradar.model.Asteroid
 
-@Entity(tableName = TABLE_NAME)
-class AsteroidEntities(
+@Entity(tableName = "databaseasteroid")
+data class DatabaseAsteroid(
 
     @PrimaryKey(autoGenerate = true)
     val id: Long,
@@ -16,9 +16,26 @@ class AsteroidEntities(
     val relativeVelocity: Double,
     val distanceFromEarth: Double,
     val isPotentiallyHazardous: Boolean
-) {
-    companion object {
-        const val TABLE_NAME = "asteroids"
+)
 
+
+fun List<DatabaseAsteroid>.asDomainModel(): List<Asteroid> {
+    return map {
+        Asteroid(
+            id = it.id,
+            codename = it.codename,
+            closeApproachDate = it.closeApproachDate,
+            absoluteMagnitude = it.absoluteMagnitude,
+            estimatedDiameter = it.estimatedDiameter,
+            relativeVelocity = it.relativeVelocity,
+            distanceFromEarth = it.distanceFromEarth,
+            isPotentiallyHazardous = it.isPotentiallyHazardous
+        )
     }
+
+
 }
+
+
+
+

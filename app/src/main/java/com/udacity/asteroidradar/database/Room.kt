@@ -1,39 +1,40 @@
 package com.udacity.asteroidradar.database
 
 import android.content.Context
-import androidx.room.Dao
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.lifecycle.LiveData
+import androidx.room.*
 
 @Dao
 interface AsteroidDao {
-//put your Query
+
+
+    @Query("SELECT * FROM databaseasteroid")
+    fun getAsteroids(): LiveData<List<DatabaseAsteroid>>
+
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAsteroid(vararg asteroid: DatabaseAsteroid)
+
 }
 
-@Database(entities = [AsteroidEntities::class], version = 1, exportSchema = false)
+@Database(entities = [DatabaseAsteroid::class], version = 1, exportSchema = false)
 abstract class AsteroidDataBase : RoomDatabase() {
 
     abstract val asteroidDao: AsteroidDao
+}
 
-    companion object {
-        @Volatile
-        private var INSTANCE: AsteroidDataBase? = null
+private lateinit var INSTANCE: AsteroidDataBase
 
-        fun getInstance(context: Context): AsteroidDataBase? {
-            var instance = INSTANCE
-            synchronized(this) {
-                if (INSTANCE == null) {
-                    instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        AsteroidDataBase::class.java,
-                        AsteroidEntities.TABLE_NAME
-                    ).fallbackToDestructiveMigration()
-                        .build()
-                    INSTANCE = instance
-                }
-            }
-            return instance
+fun getDatabase(context: Context): AsteroidDataBase {
+    synchronized(AsteroidDataBase::class.java) {
+        if (!::INSTANCE.isInitialized) {
+            INSTANCE = Room.databaseBuilder(
+                context.applicationContext,
+                AsteroidDataBase::class.java,
+                "databaseasteroid"
+            ).fallbackToDestructiveMigration()
+                .build()
         }
     }
+    return INSTANCE
 }
