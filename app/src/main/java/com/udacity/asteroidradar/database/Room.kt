@@ -17,9 +17,8 @@ interface AsteroidDao {
 
 }
 
-@Database(entities = [DatabaseAsteroid::class], version = 1, exportSchema = false)
+@Database(entities = [DatabaseAsteroid::class], version = 1)
 abstract class AsteroidDataBase : RoomDatabase() {
-
     abstract val asteroidDao: AsteroidDao
 }
 
@@ -31,7 +30,7 @@ fun getDatabase(context: Context): AsteroidDataBase {
             INSTANCE = Room.databaseBuilder(
                 context.applicationContext,
                 AsteroidDataBase::class.java,
-                "databaseasteroid"
+                "astroids"
             ).fallbackToDestructiveMigration()
                 .build()
         }

@@ -5,21 +5,23 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.udacity.asteroidradar.Constants
 import com.udacity.asteroidradar.model.PictureOfDay
+import kotlinx.coroutines.Deferred
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+
 interface AsteroidServices {
     @GET("neo/rest/v1/feed")
     suspend fun getAsteroid(
-        @Query("api_key") api_key: String
-    ): String
+        @Query("api_key") api_key: String,
+    ): Deferred<String>
 
     @GET("planetary/apod")
     suspend fun getPicOfTheDay(
-        @Query("api_key") api_key: String
+        @Query("api_key") api_key: String,
     ): PictureOfDay
 }
 
