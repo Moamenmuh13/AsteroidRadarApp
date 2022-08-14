@@ -49,7 +49,6 @@ class MainFragment : Fragment() {
         viewModel.asteroidList.observe(viewLifecycleOwner) { list ->
             list?.apply {
                 mainAdapter.submitList(list)
-                Log.d(TAG, "onViewCreated: ${list[1]}")
             }
         }
     }

@@ -19,7 +19,6 @@ import java.time.format.DateTimeFormatter
 
 class AsteroidRepository(private val dataBase: AsteroidDataBase) {
 
-    private val startDate = LocalDateTime.now()
     val asteroid: LiveData<List<Asteroid>> =
         Transformations.map(dataBase.asteroidDao.getAsteroids()) {
             it.asDomainModel()
