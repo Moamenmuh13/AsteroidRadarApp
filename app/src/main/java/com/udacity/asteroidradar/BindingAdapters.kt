@@ -3,6 +3,7 @@ package com.udacity.asteroidradar
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -51,3 +52,8 @@ fun bindTextViewToDisplayVelocity(textView: TextView, number: Double) {
     val context = textView.context
     textView.text = String.format(context.getString(R.string.km_s_unit_format), number)
 }
+@BindingAdapter("goneIfNotNull")
+fun goneIfNotNull(view: View, it: Any?) {
+    view.visibility = if (it != null) View.GONE else View.VISIBLE
+}
+

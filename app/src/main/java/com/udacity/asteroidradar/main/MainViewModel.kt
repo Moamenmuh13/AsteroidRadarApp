@@ -21,12 +21,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = AsteroidRepository(database)
 
 
-    private val _asteroidList = MutableLiveData<List<Asteroid>>()
+    private var _asteroidList = repository.asteroid
     val asteroidList: LiveData<List<Asteroid>>
         get() = _asteroidList
 
 
-    private val _imgUrl = MutableLiveData<PictureOfDay>()
+    private var _imgUrl = MutableLiveData<PictureOfDay>()
     val imgUrl: LiveData<PictureOfDay>
         get() = _imgUrl
 
@@ -35,8 +35,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             repository.refreshData()
             getPicOfDay()
+
         }
+
     }
+
 
     private suspend fun getPicOfDay() {
         withContext(Dispatchers.IO) {
@@ -50,9 +53,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    /**
-     * Factory for constructing DevByteViewModel with parameter
-     */
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
@@ -64,5 +64,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 }
+
+/**
+ * Factory for constructing DevByteViewModel with parameter
+ */
+
 
 

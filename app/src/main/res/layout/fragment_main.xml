@@ -26,12 +26,12 @@
 
             <ImageView
                 android:id="@+id/activity_main_image_of_the_day"
+                app:ImageURL="@{viewModel.imgUrl.url}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:contentDescription="@{viewModel.imgUrl.title}"
                 android:scaleType="centerCrop"
-                app:ImageURL="@{viewModel.imgUrl.url}"
                 app:srcCompat="@drawable/placeholder_picture_of_day" />
 
             <TextView
@@ -62,6 +62,7 @@
 
         <ProgressBar
             android:id="@+id/status_loading_wheel"
+            goneIfNotNull="@{viewModel.asteroidList}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:indeterminate="true"

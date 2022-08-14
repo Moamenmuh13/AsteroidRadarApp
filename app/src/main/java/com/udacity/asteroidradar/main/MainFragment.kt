@@ -3,6 +3,7 @@ package com.udacity.asteroidradar.main
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
@@ -10,21 +11,35 @@ import com.udacity.asteroidradar.databinding.FragmentMainBinding
 class MainFragment : Fragment() {
 
     private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this)[MainViewModel::class.java]
+        ViewModelProvider(requireNotNull(this.activity),
+            MainViewModel.Factory(activity!!.application))[MainViewModel::class.java]
     }
+
+    private var mainAdapter: MainAdapter? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         val binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
         binding.viewModel = viewModel
+        binding.asteroidRecycler.adapter = mainAdapter
 
         setHasOptionsMenu(true)
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.asteroidList.observe(viewLifecycleOwner, Observer {
+            it?.apply {
+                mainAdapter?.submitList(it)
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

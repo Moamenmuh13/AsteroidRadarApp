@@ -23,7 +23,7 @@ class AsteroidRepository(private val dataBase: AsteroidDataBase) {
 
     suspend fun refreshData() {
         withContext(Dispatchers.IO) {
-            val asteroids = APIServices.asteroidServices.getAsteroid(API_KEY).await()
+            val asteroids = APIServices.asteroidServices.getAsteroid(API_KEY)
             val result = parseAsteroidsJsonResult(JSONObject(asteroids))
             dataBase.asteroidDao.insertAsteroid(*result.asDatabaseModel())
         }

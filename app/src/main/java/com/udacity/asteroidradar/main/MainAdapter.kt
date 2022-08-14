@@ -1,5 +1,6 @@
 package com.udacity.asteroidradar.main
 
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -31,8 +32,9 @@ class MainAdapter() : ListAdapter<Asteroid, MainAdapter.MyViewHolder>(DiffCallba
 
     class MyViewHolder(private val binding: TicketMainBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(asteroid: Asteroid) {
+        fun bind(asteroid : Asteroid?) {
             binding.asteroid = asteroid
+            binding.executePendingBindings()
         }
 
         companion object {
