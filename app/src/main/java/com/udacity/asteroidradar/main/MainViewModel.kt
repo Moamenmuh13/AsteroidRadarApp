@@ -4,8 +4,7 @@ import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.*
 import com.udacity.asteroidradar.Constants.API_KEY
-import com.udacity.asteroidradar.database.getDatabase
-import com.udacity.asteroidradar.model.Asteroid
+import com.udacity.asteroidradar.database.AsteroidDataBase
 import com.udacity.asteroidradar.model.PictureOfDay
 import com.udacity.asteroidradar.network.APIServices
 import com.udacity.asteroidradar.repository.AsteroidRepository
@@ -17,18 +16,18 @@ import kotlinx.coroutines.withContext
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
 
-    private val database = getDatabase(application)
+    private val database = AsteroidDataBase.getDatabase(application)
     private val repository = AsteroidRepository(database)
 
 
-    private var _asteroidList = repository.asteroid
-    val asteroidList: LiveData<List<Asteroid>>
-        get() = _asteroidList
+    var asteroidList = repository.asteroid
+//    val asteroidList: LiveData<List<Asteroid>>
+//        get() = _asteroidList
 
 
-    private var _imgUrl = MutableLiveData<PictureOfDay>()
-    val imgUrl: LiveData<PictureOfDay>
-        get() = _imgUrl
+     var imgUrl = MutableLiveData<PictureOfDay>()
+//    val imgUrl: LiveData<PictureOfDay>
+//        get() = _imgUrl
 
 
     init {
@@ -44,7 +43,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private suspend fun getPicOfDay() {
         withContext(Dispatchers.IO) {
             try {
-                _imgUrl.postValue(APIServices.asteroidServices.getPicOfTheDay(API_KEY))
+                imgUrl.postValue(APIServices.asteroidServices.getPicOfTheDay(API_KEY))
             } catch (e: Exception) {
                 Toast.makeText(getApplication(), "Failed To load the img", Toast.LENGTH_SHORT)
                     .show()

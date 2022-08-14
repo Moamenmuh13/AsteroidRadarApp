@@ -26,7 +26,7 @@
 
             <ImageView
                 android:id="@+id/activity_main_image_of_the_day"
-                app:ImageURL="@{viewModel.imgUrl.url}"
+                imageURL="@{String.valueOf(viewModel.imgUrl.url)}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -62,11 +62,11 @@
 
         <ProgressBar
             android:id="@+id/status_loading_wheel"
-            goneIfNotNull="@{viewModel.asteroidList}"
+            goneIfNotNull="@{viewModel.asteroidList.size()}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:indeterminate="true"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

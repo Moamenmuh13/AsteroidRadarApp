@@ -1,6 +1,5 @@
 package com.udacity.asteroidradar.main
 
-import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,17 +8,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.udacity.asteroidradar.databinding.TicketMainBinding
 import com.udacity.asteroidradar.model.Asteroid
 
-class MainAdapter() : ListAdapter<Asteroid, MainAdapter.MyViewHolder>(DiffCallback) {
+class MainAdapter(private val clickListener: AsteroidListener) :
+    ListAdapter<Asteroid, MainAdapter.MyViewHolder>(DiffCallback) {
+
+
     companion object DiffCallback : DiffUtil.ItemCallback<Asteroid>() {
         override fun areItemsTheSame(oldItem: Asteroid, newItem: Asteroid): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(oldItem: Asteroid, newItem: Asteroid): Boolean {
-            return oldItem == newItem
+            return oldItem.id == newItem.id
         }
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder.from(parent)
@@ -27,13 +28,14 @@ class MainAdapter() : ListAdapter<Asteroid, MainAdapter.MyViewHolder>(DiffCallba
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, clickListener)
     }
 
     class MyViewHolder(private val binding: TicketMainBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(asteroid : Asteroid?) {
+        fun bind(asteroid: Asteroid?, clickListener: AsteroidListener) {
             binding.asteroid = asteroid
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
 
@@ -48,5 +50,9 @@ class MainAdapter() : ListAdapter<Asteroid, MainAdapter.MyViewHolder>(DiffCallba
                 )
             }
         }
+    }
+
+    class AsteroidListener(val clickListener: (asteroid: Asteroid) -> Unit) {
+        fun onClick(asteroid: Asteroid) = clickListener(asteroid)
     }
 }
